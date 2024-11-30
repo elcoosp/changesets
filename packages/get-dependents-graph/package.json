@@ -25,6 +25,6 @@
     "semver": "^7.5.3"
   },
   "devDependencies": {
-    "@changesets/test-utils": "workspace:*"
+    "@changesets/test-utils": "*"
   }
 }

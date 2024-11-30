@@ -13,9 +13,9 @@
     "format": "prettier --list-different \"**/*.{js,ts,tsx,md}\"",
     "format:fix": "prettier --write \"**/*.{js,ts,tsx,md}\"",
     "changeset": "packages/cli/bin.js",
-    "check-all": "pnpm test && pnpm types:check && yarn lint && pnpm format",
-    "version-packages": "changeset version && pnpm format:fix",
-    "release": "pnpm build && changeset publish"
+    "check-all": "yarn test && yarn types:check && yarn lint && yarn format",
+    "version-packages": "changeset version && yarn format:fix",
+    "release": "yarn build && changeset publish"
   },
   "repository": {
     "type": "git",

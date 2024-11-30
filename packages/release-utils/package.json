@@ -29,9 +29,9 @@
     "unified": "^8.3.2"
   },
   "devDependencies": {
-    "@changesets/git": "workspace:*",
-    "@changesets/test-utils": "workspace:*",
-    "@changesets/write": "workspace:*",
+    "@changesets/git": "*",
+    "@changesets/test-utils": "*",
+    "@changesets/write": "*",
     "file-url": "^3.0.0"
   }
 }

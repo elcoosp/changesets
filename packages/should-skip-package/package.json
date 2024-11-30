@@ -23,6 +23,6 @@
     "@manypkg/get-packages": "^1.1.3"
   },
   "devDependencies": {
-    "@changesets/test-utils": "workspace:*"
+    "@changesets/test-utils": "*"
   }
 }
