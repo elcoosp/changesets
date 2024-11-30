@@ -34,7 +34,7 @@
     "semver": "^7.5.3"
   },
   "devDependencies": {
-    "@changesets/test-utils": "*",
+    "@changesets/test-utils": "workspace:*",
     "spawndamnit": "^3.0.1"
   }
 }

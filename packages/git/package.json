@@ -26,8 +26,8 @@
     "spawndamnit": "^3.0.1"
   },
   "devDependencies": {
-    "@changesets/test-utils": "*",
-    "@changesets/write": "*",
+    "@changesets/test-utils": "workspace:*",
+    "@changesets/write": "workspace:*",
     "file-url": "^3.0.0",
     "fs-extra": "^7.0.1"
   }

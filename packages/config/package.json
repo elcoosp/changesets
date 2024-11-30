@@ -32,7 +32,7 @@
     "micromatch": "^4.0.8"
   },
   "devDependencies": {
-    "@changesets/test-utils": "*",
+    "@changesets/test-utils": "workspace:*",
     "@types/micromatch": "^4.0.1",
     "jest-in-case": "^1.0.2",
     "outdent": "^0.5.0"

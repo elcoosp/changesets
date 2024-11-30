@@ -8,14 +8,14 @@
     "build": "preconstruct build",
     "watch": "preconstruct watch",
     "postinstall": "preconstruct dev && manypkg check",
-    "lint": "yarn eslint . --ext .ts,.tsx,.js",
+    "lint": "eslint . --ext .ts,.tsx,.js",
     "types:check": "tsc",
     "format": "prettier --list-different \"**/*.{js,ts,tsx,md}\"",
     "format:fix": "prettier --write \"**/*.{js,ts,tsx,md}\"",
     "changeset": "packages/cli/bin.js",
-    "check-all": "yarn test && yarn types:check && yarn lint && yarn format",
-    "version-packages": "changeset version && yarn format:fix",
-    "release": "yarn build && changeset publish"
+    "check-all": "pnpm test && pnpm types:check && yarn lint && pnpm format",
+    "version-packages": "changeset version && pnpm format:fix",
+    "release": "pnpm build && changeset publish"
   },
   "repository": {
     "type": "git",

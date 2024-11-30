@@ -28,7 +28,7 @@
     "picocolors": "^1.1.0"
   },
   "devDependencies": {
-    "@changesets/test-utils": "*",
+    "@changesets/test-utils": "workspace:*",
     "outdent": "^0.5.0"
   }
 }

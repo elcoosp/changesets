@@ -25,7 +25,7 @@
     "prettier": "^2.7.1"
   },
   "devDependencies": {
-    "@changesets/parse": "*",
-    "@changesets/test-utils": "*"
+    "@changesets/parse": "workspace:*",
+    "@changesets/test-utils": "workspace:*"
   }
 }

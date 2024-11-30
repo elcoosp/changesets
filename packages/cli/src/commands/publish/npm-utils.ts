@@ -41,11 +41,15 @@ function getCorrectRegistry(packageJson?: PackageJSON): string {
     : registry;
 }
 
-async function getPublishTool(
-  cwd: string
-): Promise<{ name: "npm" } | { name: "pnpm"; shouldAddNoGitChecks: boolean }> {
+export type PublishTool =
+  | { name: "npm" }
+  | { name: "pnpm"; shouldAddNoGitChecks: boolean }
+  | { name: "deno" };
+async function getPublishTool(cwd: string): Promise<PublishTool> {
   const pm = await detect({ cwd });
-  if (!pm || pm.name !== "pnpm") return { name: "npm" };
+  if (!pm) return { name: "npm" };
+  if (pm.name === "deno") return { name: "deno" };
+  if (pm.name !== "pnpm") return { name: "npm" };
   try {
     let result = await spawn("pnpm", ["--version"], { cwd });
     let version = result.stdout.toString().trim();
@@ -125,8 +129,7 @@ export async function infoAllow404(packageJson: PackageJSON) {
   }
   if (pkgInfo.error) {
     error(
-      `Received an unknown error code: ${
-        pkgInfo.error.code
+      `Received an unknown error code: ${pkgInfo.error.code
       } for npm info ${pc.cyan(`"${packageJson.name}"`)}`
     );
     error(pkgInfo.error.summary);
@@ -176,7 +179,10 @@ async function internalPublish(
   if (publishTool.name === "pnpm" && publishTool.shouldAddNoGitChecks) {
     publishFlags.push("--no-git-checks");
   }
-
+  // TODO: remove once tested
+  if (publishTool.name === "deno") {
+    publishFlags.push("--dry-run");
+  }
   // Due to a super annoying issue in yarn, we have to manually override this env variable
   // See: https://github.com/yarnpkg/yarn/issues/2935#issuecomment-355292633
   const envOverride = {
@@ -185,16 +191,27 @@ async function internalPublish(
   let { code, stdout, stderr } =
     publishTool.name === "pnpm"
       ? await spawn("pnpm", ["publish", "--json", ...publishFlags], {
+        env: Object.assign({}, process.env, envOverride),
+        cwd: opts.cwd,
+      })
+      : publishTool.name === "deno"
+        ? await spawn("deno", ["publish", ...publishFlags], {
           env: Object.assign({}, process.env, envOverride),
           cwd: opts.cwd,
         })
-      : await spawn(
+        : await spawn(
           publishTool.name,
           ["publish", opts.publishDir, "--json", ...publishFlags],
           {
             env: Object.assign({}, process.env, envOverride),
           }
         );
+  if (publishTool.name === "deno") {
+    error(stderr.toString() || stdout.toString());
+
+    return { published: false };
+
+  }
   if (code !== 0) {
     // NPM's --json output is included alongside the `prepublish` and `postpublish` output in terminal
     // We want to handle this as best we can but it has some struggles:
